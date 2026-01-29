@@ -1,0 +1,39 @@
+name: Check Repository Facebook Session
+on:
+  push: 
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  check-session:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.7.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'pnpm'
+
+      
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Install Playwright browsers
+        run: npx playwright install chromium
+
+      - name: Check Facebook session
+        env:
+          FB_SESSION_JSON: ${{ secrets.FB_SESSION_JSON }}
+          HEADLESS: 'true'
+        run: pnpm run session:check
