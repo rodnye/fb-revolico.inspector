@@ -1,12 +1,12 @@
 import { writeFile } from 'node:fs/promises';
-import { manualSessionActivation } from '../core/get-session';
+import { manualSessionActivation } from '../core/session';
 import { config } from '../config';
 
 const main = async () => {
   const session = await manualSessionActivation();
 
   console.log('Saving session context for Playwright...');
-  
+
   //
   await writeFile(config.fbSessionJsonPath, JSON.stringify(session, null, 2));
 

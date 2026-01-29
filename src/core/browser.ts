@@ -25,6 +25,14 @@ export const createPage = async () => {
   return page;
 };
 
+export const createPageContextLess = async (headless = config.headless) => {
+  const browser = await chromium.launch({
+    executablePath: config.executablePath,
+    headless,
+  });
+  return browser.newPage();
+};
+
 export const closeBrowser = async () => {
   if (browserInstance) {
     await browserInstance.close();

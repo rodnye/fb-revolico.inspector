@@ -1,14 +1,11 @@
-import { chromium } from 'playwright';
-import { config } from '../config';
+import { createPage, createPageContextLess } from './browser';
 
 export const manualSessionActivation = async () => {
   console.log(`Launching chrome instance...`);
 
-  const browser = await chromium.launch({
-    executablePath: config.executablePath,
-    headless: false, // NO HEADLESS, need manual auth
-  });
-  const page = await browser.newPage();
+  const page = await createPageContextLess(
+    false, //// NO HEADLESS, need manual auth
+  );
 
   console.log(`Manual authentication requested`);
 
@@ -67,3 +64,28 @@ export const manualSessionActivation = async () => {
     throw new Error('Manual activation timeout. Please try again.');
   }
 };
+
+export const checkActiveSession = async () => {
+  console.log(`Launching chrome instance...`);
+
+  const page = await createPage();
+
+  console.log(`Check session run...`);
+
+  await page.goto('https://www.facebook.com/login');
+  const url = page.url();
+
+  console.log(`Check session current url: ${url}`);
+
+  if (
+    !url.includes('login') &&
+    !url.includes('two_factor') &&
+    !url.includes('auth') &&
+    !url.includes('checkpoint')
+  ) {
+    console.log('Already been autenthicated');
+    return true;
+  }
+
+  return false;
+}

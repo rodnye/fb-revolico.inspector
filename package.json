@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "description": "",
   "scripts": {
-    "create:session": "ts-node src/scripts/create-session.ts"
+    "session:create": "ts-node src/scripts/create-session.ts",
+    "session:check": "ts-node src/scripts/check-session.ts"
   },
   "packageManager": "pnpm@10.7.0",
   "dependencies": {
