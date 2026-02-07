@@ -25,7 +25,7 @@ cp .env.example .env
 Run the session creation script:
 
 ```bash
-pnpm run create:session
+pnpm run session:create
 ```
 
 This will:
@@ -35,11 +35,24 @@ This will:
 - Wait for manual authentication (5-minute timeout)
 - Save the authenticated session to `.fb-session.json`
 
+### 3. Verify Session Validity
+
+After creating a session, you can verify if it's still valid and usable:
+
+```bash
+pnpm run session:check
+```
+
+This will:
+- Check if the session file exists
+- Validate that the session is still active
+- Inform you if the session is valid or has expired
+
 ## Authentication Methods
 
 ### Option A: Local Session File (Default)
 
-After running `create:session`, your session is saved to `.fb-session.json` in the project root.
+After running `session:create`, your session is saved to `.fb-session.json` in the project root.
 
 ### Option B: Environment Variable
 
@@ -49,7 +62,14 @@ Alternatively, set the `FB_SESSION_JSON` environment variable with the session J
 export FB_SESSION_JSON='{"cookies":[...],"origins":[...]}'
 ```
 
+## Workflow
+
+1. **Create session**: `pnpm run session:create`
+2. **Verify session**: `pnpm run session:check`
+3. Use session
+
 ## Security Notes
 
 - Session files contain authentication cookies and should be treated as sensitive data
 - Use environment variables for production deployment
+- Regularly check session validity with `session:check` to ensure your automation runs smoothly
