@@ -72,7 +72,7 @@ export const checkActiveSession = async () => {
 
   console.log(`Check session run...`);
 
-  await page.goto('https://www.facebook.com/login');
+  await page.goto('https://www.facebook.com/home.php');
   const url = page.url();
 
   console.log(`Check session current url: ${url}`);
