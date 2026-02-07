@@ -1,0 +1,43 @@
+name: Save Ranking to Branch
+
+on:
+  workflow_dispatch:
+
+jobs:
+  save-ranking:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.7.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Install Playwright browsers
+        run: npx playwright install chromium
+
+      - name: Generate Ranking
+        run: pnpm run scrap:ranking
+
+      - name: Set current date
+        run: echo "CURRENT_DATE=$(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
+
+      - name: Publish output folder
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: output/ranking
+          publish_dir: ./output
+          commit_message: 'chore: update output - ${{ env.CURRENT_DATE }}'
