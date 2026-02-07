@@ -14,12 +14,7 @@ export const manualSessionActivation = async () => {
 
   console.log(`Manual activation current URL: ${url}`);
 
-  if (
-    !url.includes('login') &&
-    !url.includes('two_factor') &&
-    !url.includes('auth') &&
-    !url.includes('checkpoint')
-  ) {
+  if (checkUrl(url)) {
     console.log('Already been autenthicated');
     return page.context().storageState();
   }
@@ -37,13 +32,7 @@ export const manualSessionActivation = async () => {
       );
 
       const interval = setInterval(() => {
-        const url = page.url();
-        if (
-          !url.includes('login') &&
-          !url.includes('two_factor') &&
-          !url.includes('auth') &&
-          !url.includes('checkpoint')
-        ) {
+        if (checkUrl(page.url())) {
           clear();
           resolve();
         }
@@ -77,15 +66,22 @@ export const checkActiveSession = async () => {
 
   console.log(`Check session current url: ${url}`);
 
-  if (
-    !url.includes('login') &&
-    !url.includes('two_factor') &&
-    !url.includes('auth') &&
-    !url.includes('checkpoint')
-  ) {
+  if (checkUrl(url)) {
     console.log('Already been autenthicated');
     return true;
   }
 
   return false;
-}
+};
+
+/**
+ *
+ */
+export const checkUrl = (url: string) => {
+  return (
+    !url.includes('login') &&
+    !url.includes('two_factor') &&
+    !url.includes('auth') &&
+    !url.includes('checkpoint')
+  );
+};

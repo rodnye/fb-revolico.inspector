@@ -2,9 +2,10 @@ import { Locator } from 'playwright';
 import { createPage } from '../core/browser';
 import { parseMemberCount, parsePostsPerDay } from './pipes/parse';
 import { GroupData } from '../types/GroupData';
+import { checkUrl } from '../core/session';
 
 /**
- * 
+ *
  */
 export const scrapFirstGroups = async (search: string, max = 10) => {
   const page = await createPage();
@@ -13,6 +14,9 @@ export const scrapFirstGroups = async (search: string, max = 10) => {
   await page.goto(
     'https://www.facebook.com/search/groups/?q=' + encodeURIComponent(search),
   );
+
+  if (!checkUrl(page.url()))
+    throw new Error('The current session is not valid or has expired.');
 
   const listLocator = page.locator('div[role=main] div[role=feed]');
   const groups: GroupData[] = [];
@@ -65,7 +69,7 @@ export const scrapFirstGroups = async (search: string, max = 10) => {
 };
 
 /**
- * 
+ *
  */
 export const extractGroupData = async (card: Locator): Promise<GroupData> => {
   const nameLinkLocator = card.locator('a[role=presentation]');
