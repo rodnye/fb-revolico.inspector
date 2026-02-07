@@ -1,9 +1,16 @@
-```
-# Facebook Groups Scraper & Ranking Tool
+# Facebook Groups Scraper
 
-A browser automation tool for scraping Facebook groups, analyzing activity metrics, and generating ranked lists based on group engagement. Built with Playwright and TypeScript.
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![Playwright](https://img.shields.io/badge/Playwright-2EAD33?style=for-the-badge&logo=typescript&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)
 
-> In development...
+A browser automation tool for scraping Facebook groups, analyzing activity metrics, and generating ranked lists based on group engagement.
+
+> [!IMPORTANT]
+> Experimental Scraping Technique: This project implements an experimental scraping approach for Facebook. Since Facebook typically detects and redirects automation attempts to CAPTCHA, this tool requires a pre-authenticated browser session to bypass these restrictions.
+
+> [!NOTE]
+> Output files from GitHub Actions automations are available in [this branch](https://github.com/rodnye/fb-revolico.inspector/tree/output/ranking).
 
 ## Installation
 
@@ -30,6 +37,7 @@ pnpm run session:create
 ```
 
 This will:
+
 - Launch a Chromium browser instance
 - Navigate to Facebook login
 - Wait for manual authentication (5-minute timeout)
@@ -54,6 +62,7 @@ pnpm run scrap:ranking
 ```
 
 **What this does:**
+
 - Searches for groups using predefined queries from `search-queries.json`
 - Extracts group metrics (member count, posts per day, privacy status)
 - Removes duplicate groups by URL
@@ -91,22 +100,6 @@ export FB_SESSION_JSON='{"cookies":[...],"origins":[...]}'
 2. **Verify session**: `pnpm run session:check`
 3. **Generate ranking**: `pnpm run scrap:ranking`
 
-## Project Structure
+---
 
-```
-src/
-├── logic/ranking.ts          # Ranking and deduplication logic
-├── scraping/first-groups.ts  # Groups scraping functions
-├── scraping/pipes/parse.ts   # Data parsing utilities
-├── constants/                # Search queries configuration
-├── scripts/                  # CLI entry points
-└── types/                    # TypeScript definitions
-
-output/                       # Generated ranking files
-```
-
-## Security Notes
-
-- Session files contain authentication cookies - treat as sensitive data
-- Use environment variables for production deployment
-- Generated files are saved to `output/` directory (gitignored)
+Enjoy! ;)
