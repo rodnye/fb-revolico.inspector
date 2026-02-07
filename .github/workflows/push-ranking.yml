@@ -6,11 +6,13 @@ on:
 jobs:
   save-ranking:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
+        
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
@@ -29,6 +31,9 @@ jobs:
         run: npx playwright install chromium
 
       - name: Generate Ranking
+        env:
+          FB_SESSION_JSON: ${{ secrets.FB_SESSION_JSON }}
+          HEADLESS: 'true'
         run: pnpm run scrap:ranking
 
       - name: Set current date
