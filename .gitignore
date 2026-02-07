@@ -4,3 +4,6 @@ dist
 .env*
 .fb-session.json
 !.env.example
+
+output/*
+!output/.gitkeep

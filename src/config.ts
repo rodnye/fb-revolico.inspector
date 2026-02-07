@@ -1,26 +1,7 @@
 import 'dotenv/config';
 import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
-
-interface FbSession {
-  cookies: {
-    name: string;
-    value: string;
-    domain: string;
-    path: string;
-    expires: number;
-    httpOnly: boolean;
-    secure: boolean;
-    sameSite: 'Strict' | 'Lax' | 'None';
-  }[];
-  origins: {
-    origin: string;
-    localStorage: {
-      name: string;
-      value: string;
-    }[];
-  }[];
-}
+import { FbSession } from './types/FbSession';
 
 export const config = {
   executablePath: process.env.EXECUTABLE_PATH,
