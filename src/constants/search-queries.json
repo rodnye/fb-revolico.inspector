@@ -1,7 +1,10 @@
 [
-  { "query": "Revolico Habana", "max": 20 },
-  { "query": "Compra Habana", "max": 20 },
-  { "query": "Venta Habana", "max": 20 },
-  { "query": "Ropa Habana", "max": 20 },
-  { "query": "Electrodomesticos Habana", "max": 20 }
+  { "query": "Revolico Habana", "max": 80 },
+  { "query": "Compra Habana", "max": 80 },
+  { "query": "Venta Habana", "max": 80 },
+  { "query": "Shein Habana", "max": 60 },
+  { "query": "Ropa Habana", "max": 80 },
+  { "query": "Electrodomesticos Habana", "max": 20 },
+  { "query": "Celulares Habana", "max": 20 },
+  { "query": "Telefonos Habana", "max": 20 }
 ]
