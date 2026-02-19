@@ -28,6 +28,16 @@ Create a `.env` file based on `.env.example`:
 cp .env.example .env
 ```
 
+Available environment variables:
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `HEADLESS` | Run browser in headless mode | `true` |
+| `PREFIX_OUTPUT_FILE` | Prefix for ranking output files | `ranking` |
+| `SEARCH_QUERIES_JSON` | JSON string with search queries (overrides file) | - |
+| `FB_SESSION_JSON` | Facebook session data as JSON string | - |
+| `EXECUTABLE_PATH` | Path to custom Chrome executable | - |
+
 ### 2. Create Facebook Session
 
 Run the session creation script:
@@ -67,17 +77,25 @@ pnpm run scrap:ranking
 - Extracts group metrics (member count, posts per day, privacy status)
 - Removes duplicate groups by URL
 - Ranks groups by activity (posts/day → member count → alphabetical)
-- Saves results to `output/ranking_TIMESTAMP.json`
+- Saves results to `output/{PREFIX_OUTPUT_FILE}_TIMESTAMP.json`
 
 ### Customize Search Queries
 
-Edit `src/constants/search-queries.json` to modify search terms and result limits:
+You can provide search queries in two ways:
+
+1. **Via file** (default): Edit `src/constants/search-queries.json`:
 
 ```json
 [
   { "query": "Revolico Habana", "max": 20 },
   { "query": "Compra Habana", "max": 20 }
 ]
+```
+
+2. **Via environment variable**: Set `SEARCH_QUERIES_JSON`:
+
+```bash
+export SEARCH_QUERIES_JSON='[{"query":"Revolico Habana","max":20}]'
 ```
 
 ## Authentication Methods
