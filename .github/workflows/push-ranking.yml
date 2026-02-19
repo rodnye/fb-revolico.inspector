@@ -3,6 +3,12 @@ name: Save Ranking to Branch
 on:
   workflow_dispatch:
 
+env:
+  HEADLESS: 'true'
+  SEARCH_QUERIES_JSON: ${{ vars.SEARCH_QUERIES_JSON }}
+  PREFIX_OUTPUT_FILE: ${{ vars.PREFIX_OUTPUT_FILE }}
+  PUBLISH_BRANCH: ${{ vars.PUBLISH_BRANCH || 'output/ranking' }}
+
 jobs:
   save-ranking:
     runs-on: ubuntu-latest
@@ -43,6 +49,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: output/ranking
+          publish_branch: ${{ env.PUBLISH_BRANCH }}
           publish_dir: ./output
+          keep_files: true
           commit_message: 'chore: update output - ${{ env.CURRENT_DATE }}'
